@@ -97,3 +97,9 @@ STATIC_URL = 'static/'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# Google Tasks
+PROJECT_NAME = os.getenv('PROJECT_NAME')
+QUEUE_REGION = os.getenv('QUEUE_REGION')
+QUEUE_ID = os.getenv('QUEUE_ID')
+WORKER_URL = os.getenv('WORKER_URL')
