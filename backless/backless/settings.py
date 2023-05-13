@@ -16,6 +16,10 @@ ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')]
 
 # Application definition
 INSTALLED_APPS = [
+    # Channels
+    'daphne', 
+    
+    # Django builtin
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,7 +63,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backless.wsgi.application'
-
+ASGI_APPLICATION = 'backless.asgi.application'
 
 # Database
 DATABASE_URL = os.getenv("DATABASE_URL")
