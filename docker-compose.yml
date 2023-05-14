@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  backless_web:
+    env_file:
+      - ./backless/.env
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backless:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - backless_pg
+      - backless_worker
+      - gcloud-tasks-emulator
+  
+  backless_worker:
+    env_file:
+      - ./backless/.env
+    build: .
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8001"
+    volumes:
+      - ./backless:/app
+    ports:
+      - "8001:8001"
+
+  gcloud-tasks-emulator:
+    image: ghcr.io/aertje/cloud-tasks-emulator:latest
+    command: -host 0.0.0.0 -port 8123 -queue "projects/dev/locations/here/queues/anotherq"
+    ports:
+      - "8123:8123"
+
+  backless_pg:
+    image: postgres
+    environment:
+      - "POSTGRES_PASSWORD=postgres"
+    ports:
+      - "5432:5432"
