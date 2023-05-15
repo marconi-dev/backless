@@ -7,10 +7,10 @@ from google.cloud.tasks_v2 import CloudTasksClient
 def fake_queue_client():
     """
     Uses the local task queue
-    local task queue used in this project.
-    https://github.com/aertje/cloud-tasks-emulator
+    local task queue used in this project:
+        https://github.com/aertje/cloud-tasks-emulator
     """
-    channel = grpc.insecure_channel('localhost:8123')
+    channel = grpc.insecure_channel('gcloud-tasks-emulator:8123')
     transport = CloudTasksGrpcTransport(channel=channel)
     client = CloudTasksClient(transport=transport)
     return client
