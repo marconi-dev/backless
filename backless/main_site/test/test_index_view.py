@@ -21,7 +21,7 @@ class IndexViewTestCase(TestCase):
     def test_request_post_success(self):
         response = self.client.post('/', data={'image': self.image})
         self.assertIsInstance(response, HttpResponseRedirect)
-        self.assertEqual(response.url, '/wait/')
+        self.assertEqual(response.url, '/wait/1')
         Storage.objects.first().delete()
 
     def test_request_post_fail(self):
