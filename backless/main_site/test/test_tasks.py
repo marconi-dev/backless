@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
@@ -9,18 +10,19 @@ class RemoveBackgroundTaskTestCase(TestCase):
     url = reverse('bg-remove-task')
 
     def setUp(self):
-        image = SimpleUploadedFile(
+        self.image = SimpleUploadedFile(
             name='astolfo.jpg',
             content=open(f'{self.ASSETS_DIR}/astolfo.jpg', 'rb').read(),
             content_type='image/jpeg')
-        self.storage = Storage.objects.create(image=image)
     
     def test_url_name(self):
         self.assertEqual(self.url, '/_tasks/remove-background/')
 
     def test_remove_background_task(self):
-        id = str(self.storage.id)
-        response = self.client.post(
-            self.url, data=id, content_type='application/json')
-        self.storage.delete()
+        id = Storage.objects.create(image=self.image).id
+        kwargs = {"data": id, "content_type": "application/json"}
+        response = self.client.post(self.url, **kwargs)
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(response, JsonResponse)
+        Storage.objects.first().delete()
 
