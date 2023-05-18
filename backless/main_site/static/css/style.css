@@ -25,12 +25,101 @@ input::file-selector-button {
   padding: 5px 10px;
 }
 
+input::file-selector-button:hover {
+  background-color: rgba(255, 255, 255, 0.789);
+  cursor: pointer;
+}
+
 #submit {
+  color: rgba(0, 0, 0, 0.7);
   margin-top: 10px;
   background-color: rgba(211, 211, 211, 0.519);
   border-radius: 10px;
   border: 1px solid lightgray;
   padding: 10px 5px;
+  transition: 300ms;
+  width: 200px;
+  font-weight: bolder;
+}
 
-  width: 300px;
+#submit:hover {
+  cursor: pointer;
+  background-color: rgb(199, 199, 199);
+}
+
+/* Wait Room */
+#inform-h2 {
+  text-align: center;
+  animation: inform-h2 infinite alternate-reverse 1s;
+  color: rgba(0, 0, 0, 0.650);
+  background-color: lightgray;
+  padding: 15px;
+  width: fit-content;
+  border-radius: 10px;
+  margin: 20px auto 10px;
+}
+
+#inform-h2.received {
+  background-color: rgb(240, 203, 143);
+}
+
+#inform-h2.completed {
+  animation: none;
+  background-color: rgb(165, 233, 165);
+}
+
+#img-container {
+  display: flex;
+  justify-content: center;
+}
+
+#img {
+  margin: auto;
+  max-width: 80%;
+  height: auto;
+}
+
+@keyframes inform-h2 {
+  from {
+    opacity: .8;
+  } to {
+    opacity: 1;
+  }
+}
+#links-container a {
+  width: 100px;
+  padding: 10px;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  text-transform: capitalize;
+  color: rgba(0, 0, 0, 0.650);
+  border-radius: 5px;
+  font-weight: bolder;
+  transition: 300ms;
+}
+
+#links-container {
+  max-width: 500px;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  display: flex;
+  gap: 5px;
+}
+#downloadLink {  
+  background-color: rgb(165, 233, 165);
+}
+
+#downloadLink:hover {
+  background-color: rgba(165, 233, 165, 0.650);
+}
+
+#goBackLink {
+  background-color: lightgray;
+}
+
+#goBackLink:hover {
+  background-color: rgba(211, 211, 211, 0.650);
 }
