@@ -52,3 +52,8 @@ class StorageTestCase(TestCase):
             storage.remove_background()
             storage.delete()
 
+    def test_str_is_correct(self):
+        storage = Storage.objects.create(image=self.images[0])
+        self.assertEqual(str(storage), "astolfo.jpg")
+        storage.delete()
+
