@@ -17,13 +17,8 @@ function handleTaskCompleted(msg) {
   const dowloadLink = createLink("dowload", "downloadLink")
   dowloadLink.href = image_url
   dowloadLink.download = image_name
-
+ 
   show()
-}
-
-function handleTaskReceived() {
-  inform.innerText = "Sua imagem está sendo processada."
-  inform.className = "received"
 }
 
 function createLink(innerText, id) {
@@ -40,8 +35,15 @@ function show() {
   hiddenElements.forEach(element => element.classList.remove("hidden"))
 }
 
+function handleTaskReceived() {
+  inform.innerText = "Sua imagem está sendo processada."
+  inform.className = "received"
+}
+
 ws.onmessage = (msg) => {
-  msg.data == "task-received"
-  ? handleTaskReceived()
-  : handleTaskCompleted(msg.data)
+  if (msg.data == "task-received") {
+    return handleTaskReceived()
+  } else {
+    return handleTaskCompleted(msg.data);
+  }
 }
