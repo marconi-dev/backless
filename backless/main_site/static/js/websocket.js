@@ -5,20 +5,13 @@ const image = document.querySelector("#img")
 function handleTaskCompleted(msg) {
   msg = msg.split(" ")
   const image_url = msg[0]
-  const image_name = msg[1]
   
-  inform.innerHTML = "Clique em <i>dowload</i> para baixar sua imagem"
+  inform.innerHTML = "Seu png está pronto"
   inform.className = "completed"
   image.src = image_url
-
+ 
   const goBackLink = createLink("voltar", "goBackLink")
   goBackLink.href = "/"
-
-  const dowloadLink = createLink("dowload", "downloadLink")
-  dowloadLink.href = image_url
-  dowloadLink.download = image_name
- 
-  show()
 }
 
 function createLink(innerText, id) {
@@ -44,6 +37,6 @@ ws.onmessage = (msg) => {
   if (msg.data == "task-received") {
     return handleTaskReceived()
   } else {
-    return handleTaskCompleted(msg.data);
+    return handleTaskCompleted(msg.data); 
   }
 }
