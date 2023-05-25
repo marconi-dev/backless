@@ -1,7 +1,9 @@
 import os
+import google.auth
 import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
+from google.auth.transport import requests
 
 
 # Basic Settings
@@ -12,8 +14,7 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
 ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')]
-
-AWS_S3_OBJECT_PARAMETERS = {'ContentDisposition' : 'attachment'}
+CSRF_TRUSTED_ORIGINS = [os.getenv('CSRF_TRUSTED_ORIGINS')]
 
 # Application definition
 INSTALLED_APPS = [
@@ -117,6 +118,10 @@ QUEUE_REGION = os.getenv('QUEUE_REGION')
 QUEUE_ID = os.getenv('QUEUE_ID')
 WORKER_URL = os.getenv('WORKER_URL')
 
+if not DEBUG:
+    creds, project = google.auth.default()
+    creds.refresh(requests.Request())
+
 
 # S3
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
@@ -125,6 +130,8 @@ AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_FILE_OVERWRITE = True
 AWS_DEFAULT_ACL = None
 AWS_S3_REGION_NAME = os.getenv("AWS_REGION_NAME")
+AWS_S3_OBJECT_PARAMETERS = {'ContentDisposition' : 'attachment'}
+
 
 # Channels
 CHANNEL_LAYERS =  {
