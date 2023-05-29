@@ -24,3 +24,12 @@ cd backless
     - `DEFAULT_FILE_STORAGE=<str>` Utilize `storages.backends.s3boto3.S3Boto3Storage` para conectar a uma instância do AWS S3. Utilize `django.core.files.storage.FileSystemStorage` para rodar em localhost. Para configurar a conexão com o S3, visite https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html 
     - `REDIS_URL=<str>` A url do redis. 
     - `WS_URL=<str>` A url do servidor web. Utilize `http://localhost:8000`.
+4. Crie o arquivo `key.json` no diretório da aplicação e preencha com a chave de accesso da google cloud. Para rodar localmente, é usado o projeto cloud-tasks-emulator da comunidade de GO (https://github.com/aertje/cloud-tasks-emulator). Com isso é possível rodar o projeto sem utilizar a google cloud, mas de qualquer forma a lib usada para conectar com a cloud tasks vai pedir para ter uma key, válida ou não. Sugiro pedir para uma inteligência artificial para gerar uma key com campos válidos.  
+```
+> backless/key.json
+``` 
+5. Após fazer as configurações você deve ser capaz de rodar a aplicação com docker. Na raiz do projeto, onde há um arquivo docker-compose.yml, use o comando:
+```
+docker-compose up
+```
+
