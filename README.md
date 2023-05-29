@@ -32,4 +32,13 @@ cd backless
 ```
 docker-compose up
 ```
+# Preview do projeto
+Há apenas duas telas. Uma para o usuário escolher a foto que terá o fundo retirada:
 
+![image](https://github.com/marconi-dev/backless/assets/121608492/030ca81c-a51d-49b6-a2c7-33cc560ba372)
+Uma tela de espera:
+
+![image](https://github.com/marconi-dev/backless/assets/121608492/5aad5d3c-8900-485a-b9c8-a994225b5443)
+Por fim, uma tela com o resultado:
+
+![image](https://github.com/marconi-dev/backless/assets/121608492/947fdca5-480c-45e0-b190-f8722c38076d)
