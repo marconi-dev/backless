@@ -42,3 +42,20 @@ Uma tela de espera:
 Por fim, uma tela com o resultado:
 
 ![image](https://github.com/marconi-dev/backless/assets/121608492/947fdca5-480c-45e0-b190-f8722c38076d)
+
+# Como funciona
+![image](https://github.com/marconi-dev/backless/assets/121608492/61f76707-e6dc-414b-8464-604f9b9d1117)
+
+<i>Item listados conforme as ações tomadas quando um usuário envia uma foto para ser tratada</i>
+#### Backless web: 
+   É o servidor que o usuário se conecta para interagir com a aplicação. Quando o usuário envia uma foto para ser tratada, essa imagem é salva e o usuário é redirecionado para uma sala de espera onde se conecta com um websocket que vai o manter informado. Simultaneamente uma task é criada na fila do projeto.
+#### Postgre: 
+   É usado o banco de dados Postgre para armazenar o caminho da foto. 
+#### AWS S3:
+   Enquanto o Postgre salva o caminho das imagens, o arquivo fica salvo num bucket da S3.
+#### Cloud tasks
+   O processo de remoção do fundo das imagens pode ser demorado, por isso foi utilizado um sistema de filas para melhorar (a experiência do usuário | o tempo de resposta). No ecossistema python normalmente se usa Celery. Contudo, para esse projeto, manter um worker de celery seria caro de mais. Por isso optei por usar a cloud tasks que lida com filas de forma diferente. Quando uma task é enviada para a fila, é feita uma requisição para o servidor (worker) que só então é usado. Enquanto com o Celery eu precisaria de um worker sempre conectado a algum sistema de filas ex: RabbitMQ ou Redis.
+#### Backless worker:
+   O servidor que fará o processamento da imagem. Quando recebe uma requisição (feita pela cloud tasks) é enviado um sinal para o usuário avisando que a foto dele está sendo processada. Ao remover o fundo da imagem, a imagem antiga é apagada do S3 e no lugar dela é enviada outra imagem com a extenção ".png" sem o fundo. Após isso a url da imagem é enviada via websocket para o usuário. Quando o usuário se desconectar do websocket a imagem será removida tanto do banco de dados quanto do bucket, com isso nenhuma imagem será armazenada, mantendo o free tier dos serviços utilizados.
+#### Redis:
+   O redis é usado pela lib Channels para armazenar informações sobre os grupos. É por estar conectado ao Redis que ambos os servidores (web|worker) podem enviar mensagens para o usuário.
